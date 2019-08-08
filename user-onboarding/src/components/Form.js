@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import UserList from './List'
 
-const UserForm = ({values, errors, touched, status, setStatus}) => {
+const UserForm = ({values, errors, touched, status}) => {
 
     const [users, setUsers] = useState ([])
 
@@ -66,7 +66,7 @@ const FormikUserForm = withFormik({
         terms: Yup.boolean()
     }),
 
-    handleSubmit(values, {setStatus}){
+    handleSubmit( values, {resetForm, setStatus}){
         console.log(values)
         // https://reqres.in/api/users
         axios
@@ -74,7 +74,7 @@ const FormikUserForm = withFormik({
             .then(res => {
                 console.log("response:", res)
                 setStatus(res.data)
-
+                resetForm();
             })
             .catch(err => {
                 console.log("error:", err.response)
